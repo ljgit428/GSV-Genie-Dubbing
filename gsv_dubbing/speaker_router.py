@@ -20,6 +20,11 @@ class SpeakerConfig:
     gpt_weights: str = ""
     sovits_weights: str = ""
     speed: float = 1.0
+    # Genie (genie-tts) 后端字段
+    genie_character: str = ""
+    genie_onnx_dir: str = ""
+    genie_ref_audio: str = ""
+    genie_ref_text: str = ""
 
 
 DEFAULT_PROFILE = {

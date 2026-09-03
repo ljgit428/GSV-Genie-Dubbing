@@ -1,0 +1,28 @@
+{
+  "_说明": "Genie 多说话人配置示例。每个说话人可指定独立的 genie_character（角色名）、genie_onnx_dir（ONNX 目录）、genie_ref_audio + genie_ref_text（参考音频）。按 ASS Name 字段或「名字：」前缀匹配。",
+  "default_speaker": {
+    "genie_character": "yukikaze",
+    "genie_onnx_dir": "D:/modelscope/onnx_models/Yukikaze_v2ProPlus",
+    "genie_ref_audio": "D:/modelscope/GPT-SoVITS-V2/参考音频/{一二}失眠真不好受，特别是当你其实很想睡觉的时候。.wav",
+    "genie_ref_text": "失眠真不好受，特别是当你其实很想睡觉的时候。",
+    "prompt_lang": "zh"
+  },
+  "speakers": {
+    "_匹配": "ASS 的 Name 字段，或文本前缀「名字：」；支持 fnmatch 通配",
+    "雪风": {
+      "genie_character": "yukikaze",
+      "genie_onnx_dir": "D:/modelscope/onnx_models/Yukikaze_v2ProPlus",
+      "genie_ref_audio": "D:/modelscope/GPT-SoVITS-V2/参考音频/{一二}我平时吃的饱饱的时候，确实很容易困。.wav",
+      "genie_ref_text": "我平时吃的饱饱的时候，确实很容易困。",
+      "prompt_lang": "zh"
+    },
+    "旁白": {
+      "_说明": "旁白可用不同参考音频与稍慢节奏",
+      "genie_character": "narrator",
+      "genie_onnx_dir": "D:/modelscope/onnx_models/Yukikaze_v2ProPlus",
+      "genie_ref_audio": "D:/modelscope/GPT-SoVITS-V2/参考音频/{布布}小熊把嘴角留下的蜂蜜擦干净，现在整只熊都是甜甜的味道。.wav",
+      "genie_ref_text": "小熊把嘴角留下的蜂蜜擦干净，现在整只熊都是甜甜的味道。",
+      "prompt_lang": "zh"
+    }
+  }
+}
