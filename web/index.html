@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSV-Genie-Dubbing 字幕配音</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+  <!-- ══════════ 顶部：GPT-SoVITS 连接 ══════════ -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🎙️</span>
+      <div>
+        <h1>GSV-Genie-Dubbing</h1>
+        <p class="sub">字幕 → GPT-SoVITS 逐句配音</p>
+      </div>
+    </div>
+    <div class="conn">
+      <label>API 地址 <input id="api-url" value="http://127.0.0.1:9880"></label>
+      <button id="btn-ping" class="btn">测试连接</button>
+      <span id="ping-dot" class="dot off" title="未连接"></span>
+    </div>
+  </header>
+
+  <!-- ══════════ 设置面板 ══════════ -->
+  <section class="panel settings" id="settings">
+    <h2>① 音色设置 <span class="hint">路径需为 GPT-SoVITS 服务器可访问的本机路径</span></h2>
+    <div class="grid">
+      <label class="wide">参考音频
+        <input id="ref-audio" placeholder="D:/xxx/参考音频/雪风.wav">
+      </label>
+      <label class="wide">参考文本
+        <input id="prompt-text" placeholder="参考音频里说的话">
+      </label>
+      <label class="wide">GPT 权重
+        <input id="gpt-weights" placeholder="GPT_weights_v2ProPlus/Yukikaze-e15.ckpt">
+      </label>
+      <label class="wide">SoVITS 权重
+        <input id="sovits-weights" placeholder="SoVITS_weights_v2ProPlus/Yukikaze_e8_s704.pth">
+      </label>
+      <label class="wide">多说话人 Profile（可选）
+        <input id="speaker-profile" placeholder="profile.json 路径（多角色时填写）">
+      </label>
+    </div>
+    <h2>② 合成参数</h2>
+    <div class="grid params">
+      <label>文本语言
+        <select id="text-lang">
+          <option value="zh" selected>中文</option>
+          <option value="ja">日语</option>
+          <option value="en">英语</option>
+          <option value="ko">韩语</option>
+          <option value="yue">粤语</option>
+        </select>
+      </label>
+      <label>基础语速 <input id="speed" type="number" value="1.0" step="0.05" min="0.5" max="2.0"></label>
+      <label>限速上限 <input id="max-speed" type="number" value="1.4" step="0.05" min="1.0" max="2.5"></label>
+      <label>重试次数 <input id="retry" type="number" value="3" min="1" max="10"></label>
+      <label>采样步数(V3/V4) <input id="sample-steps" type="number" value="32" min="4" max="64"></label>
+      <label class="checkbox"><input type="checkbox" id="fit-timeline" checked> 时间轴自适应（超窗自动提速）</label>
+      <label class="checkbox"><input type="checkbox" id="strip-brackets" checked> 清洗【旁白】与标签</label>
+      <label class="checkbox"><input type="checkbox" id="only-cjk"> 仅配中文行</label>
+    </div>
+  </section>
+
+  <!-- ══════════ 字幕加载 ══════════ -->
+  <section class="panel">
+    <h2>③ 字幕文件</h2>
+    <div class="row">
+      <input id="subtitle-path" placeholder="服务器本机字幕路径，如 D:/anime/sub.srt（或点右侧上传）" class="grow">
+      <button id="btn-load" class="btn primary">加载字幕</button>
+      <input type="file" id="file-input" accept=".srt,.ass,.ssa,.vtt,.txt" hidden>
+      <button id="btn-upload" class="btn">上传文件…</button>
+    </div>
+    <p class="hint" id="sub-info" hidden></p>
+  </section>
+
+  <!-- ══════════ 工作区 ══════════ -->
+  <main id="workspace" hidden>
+    <section class="panel controls">
+      <div class="row wrap">
+        <button id="btn-start" class="btn primary big">▶ 开始配音</button>
+        <button id="btn-stop" class="btn danger" disabled>■ 停止</button>
+        <button id="btn-merge" class="btn">合并导出</button>
+        <button id="btn-download" class="btn success" disabled>⬇ 下载整轨</button>
+        <div class="progress-wrap">
+          <div class="progress"><div id="progress-bar"></div></div>
+          <span id="progress-text">0 / 0</span>
+        </div>
+      </div>
+      <p class="hint" id="status-line">等待开始…</p>
+    </section>
+
+    <section class="panel">
+      <h2>句子列表 <span class="hint">点击文本可直接编辑；单句生成后可试听 / 重生成 / 下载</span></h2>
+      <div class="row toolbar">
+        <input id="filter-input" placeholder="筛选文本…" class="grow">
+        <select id="filter-status">
+          <option value="">全部状态</option>
+          <option value="pending">待合成</option>
+          <option value="done">已完成</option>
+          <option value="failed">失败</option>
+        </select>
+      </div>
+      <div id="lines" class="lines"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span id="session-tag" hidden></span>
+  </footer>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "_说明": "多说话人配置示例。ref_audio/gpt/sovits 为 GPT-SoVITS API 服务器本机可访问的路径。",
+  "text_lang": "zh",
+  "prompt_lang": "zh",
+  "default_speaker": {
+    "ref_audio": "D:/modelscope/GPT-SoVITS-V2/参考音频/{一二}失眠真不好受，特别是当你其实很想睡觉的时候。.wav",
+    "prompt_text": "失眠真不好受，特别是当你其实很想睡觉的时候。",
+    "gpt_weights": "D:/modelscope/GPT_SoVITS_Yukikaze/GPT_weights_v2ProPlus/Yukikaze-e15.ckpt",
+    "sovits_weights": "D:/modelscope/GPT_SoVITS_Yukikaze/SoVITS_weights_v2ProPlus/Yukikaze_e8_s704.pth",
+    "speed": 1.0
+  },
+  "speakers": {
+    "_匹配规则": "按 ASS 的 Name 字段，或字幕文本前缀「名字：」匹配；支持 fnmatch 通配，如 yukikaze*",
+    "雪风": {
+      "ref_audio": "D:/modelscope/GPT-SoVITS-V2/参考音频/{一二}我平时吃的饱饱的时候，确实很容易困。.wav",
+      "prompt_text": "我平时吃的饱饱的时候，确实很容易困。",
+      "gpt_weights": "D:/modelscope/GPT_SoVITS_Yukikaze/GPT_weights_v2ProPlus/Yukikaze-e15.ckpt",
+      "sovits_weights": "D:/modelscope/GPT_SoVITS_Yukikaze/SoVITS_weights_v2ProPlus/Yukikaze_e8_s704.pth",
+      "prompt_lang": "zh",
+      "speed": 1.0
+    },
+    "旁白": {
+      "_说明": "旁白可以单独配一个音色与稍慢语速",
+      "ref_audio": "",
+      "prompt_text": "",
+      "speed": 0.9
+    }
+  }
+}
